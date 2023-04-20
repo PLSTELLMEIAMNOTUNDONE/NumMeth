@@ -26,6 +26,18 @@ public class Logger {
                     "\n number of steps:"+x
             ));
         }
+        if(method.equals("solvSystem")){
+            logs.put(o,logs.get(o).append(
+                    "\n Exit code:"+x
+            ));
+        }
+    }
+    public void writeReturn(String method,Object o,Object ret){
+        if(method.equals("solvSystem")){
+            logs.put(o,logs.get(o).append(
+                    "\n result:"+ret.toString()
+            ));
+        }
     }
     public String toString(){
         StringBuilder ans=new StringBuilder();

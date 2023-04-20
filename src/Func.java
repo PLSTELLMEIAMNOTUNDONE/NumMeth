@@ -18,6 +18,12 @@ public class Func  {
     public double calc(double x){
         return  f.calculate(x);
     }
+    /*
+    *
+    *
+    * (x->x0)limit f(x)
+    * */
+
     public double limit(double x){
         double acc = Math.pow(10, -6);
         double h = 0.005;
@@ -32,6 +38,8 @@ public class Func  {
         }
         return res;
     }
+
+
 
     double calcProd(double x0) {
         Calculated c=( x ->(calc(x+x0)-calc(x0))/x);
@@ -99,5 +107,28 @@ public class Func  {
         }
         return ret;
     }
+    public Func integral(double a){
 
+        return new Func(x->{
+
+            Func ryad=new Func(N->{
+                double res=0d,h=(x-a)/N;
+                for(int i=0;i<=N-2;i+=2){
+                    res+=this.calc(a+i*h)+4*this.calc(a+(i+1)*h)+this.calc(a+(i+2)*h);
+                }
+                return (h*res)/3;
+            });
+            return ryad.calc(100000d);
+        });
+    }
+    public Func getDifN(int n){
+        if(n==0)return this;
+        if(n==1)return this.getProd();
+        return this.getProd().getDifN(n-1);
+    }
+    public static Polynom getLn(int n){
+        Polynom f=new Polynom(new double[]{-1,0,1});
+        f=f.pow(n);
+        return f.getDifN(n).mult(1/(Util.fac(n)*Math.pow(2,n)));
+    }
 }

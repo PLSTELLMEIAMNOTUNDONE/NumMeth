@@ -8,7 +8,8 @@ public class Vector {
     private final int size;
     public Vector(int size){
         this.size=size;
-        this.els=new ArrayList<>(size);
+        this.els=new ArrayList<>();
+        for(int i=0;i<size;i++)els.add(0d);
     }
     public  Vector(){
         this.size=0;
@@ -44,14 +45,14 @@ public class Vector {
     public Vector plus(Vector v){
         if(v.size!=this.size)return null;
         Vector ret=new Vector(this.size);
-        for(int i=0;i<size;i++){
-            ret.els.add(this.els.get(i)+v.els.get(i));
+        for(int i=1;i<=size;i++){
+            ret.setI(i,this.getI(i)+v.getI(i));
         }
         return ret;
     }
     public Vector mult(double x){
         Vector ret=new Vector(this.size);
-        for(double el:this.els)ret.els.add(el*x);
+        for(int i=1;i<=size;i++)ret.setI(i,ret.getI(i)*x);
         return  ret;
     }
     public void setI(int i,double x){

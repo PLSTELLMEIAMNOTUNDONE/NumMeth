@@ -58,11 +58,12 @@ public class Matrix {
         return res;
     }
     public Vector mult(Vector vec) {
+
         return new Vector(multVec(vec.getEls()));
     }
     public Matrix mult(Matrix A){
-        Matrix B=new Matrix(this.n,this.m);
-        if(A.n!=B.m)return null;
+        Matrix B=new Matrix(this.n,A.m);
+        if(A.n!=this.m)return null;
         for(int i=0;i<n;i++){
 
             for(int j=0;j<A.m;j++){
@@ -154,7 +155,7 @@ public class Matrix {
                 if (j == getCols() - 1) ans.append((v.get(i).get(j)));
                 else ans.append((v.get(i).get(j) + " "));
             }
-            ans.append(("]"));
+            ans.append(("]\n"));
         }
         return  ans.toString();
     }
@@ -218,7 +219,28 @@ public class Matrix {
         Collections.reverse(roots);
         return roots;
     }
+    public static  Vector solvSystem(Matrix A,Vector b) {
+        Matrix matrix = new Matrix(A).concat(b.getEls()).getUpperTriangle();
+        ArrayList<Double> roots = new ArrayList<>();
+        logger.register(A);
+        for (int i = A.getRows() - 1; i >= 0; i--) {
+            double x = matrix.getE(i, A.getCols());
+            for (int j = 0; j < roots.size(); j++) {
+                x -= matrix.getE(i, i + j + 1) * roots.get(roots.size() - j - 1);
+            }
+            if(Math.abs(matrix.getE(i, i))==0){
+                logger.write("solvSystem",A,-1);
 
+                return null;
+            } else {
+                x /= matrix.getE(i, i);
+            }
+            roots.add(x);
+        }
+       logger.write("solvSystem",A,1);
+        logger.writeReturn("solvSystem",A,new Vector(roots));
+        return new Vector(roots);
+    }
     private Matrix createC() {
         Matrix matrixC = new Matrix(getRows(), getCols());
         for (int i = 0; i < getRows(); i++) {
@@ -473,4 +495,14 @@ public class Matrix {
         return arr;
 
     }
+    public Matrix transPos(){
+        Matrix ret=new Matrix(this.m,this.n);
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                ret.setE(j,i,this.getE(i,j));
+            }
+        }
+        return ret;
+    }
+
 }

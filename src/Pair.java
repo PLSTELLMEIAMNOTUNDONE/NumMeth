@@ -5,7 +5,10 @@ public class Pair<F,S> {
         this.f=f;
         this.s=s;
     }
-
+    public Pair(){
+        this.f=null;
+        this.s=null;
+    }
     public F getFirst(){
         return f;
     }
