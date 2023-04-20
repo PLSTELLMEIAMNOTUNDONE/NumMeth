@@ -70,23 +70,8 @@ public class Func  {
         return x;
 
     }
-    public  static  ArrayList<Double> getPointsSmart(double a,double b,int n){
-        ArrayList<Double> ret=new ArrayList<>();
-        for(int i=0;i<n;i++){
-            double xi=0.5*((b-a)*Math.cos((float)(2*i+1)/(2*n+2))+(b+a));
-            ret.add(xi);
-        }
-        return ret;
-    }
-    public  static  ArrayList<Double> getPoints(double a,double b,int n){
-        ArrayList<Double> ret=new ArrayList<>();
-        double xi=a;
-        for(int i=1;i<=n;i++){
-            xi=a+((b-a)*i/n);
-            ret.add(xi);
-        }
-        return ret;
-    }
+
+
     private Polynom getLi(ArrayList<Double> points,int j){
         Polynom ret=new Polynom(new double[]{1});
         for(int i=0;i<points.size();i++){

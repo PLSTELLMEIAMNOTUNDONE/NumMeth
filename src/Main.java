@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
+
     public static void YANA(String[] args){
         Vector x=new Vector(new double[]{
                 0,15,30,45,60,70,80,100
@@ -46,61 +47,118 @@ public class Main {
         System.out.println(Util.YANATASK(x,y,valsR));
 
     }
-    public static Matrix scanMatrix(int n,int m){
-        FileReader fileReader= null;
-        try {
-            fileReader = new FileReader("input.txt");
+    public static Matrix scanMatrix(int n,int m,StringTokenizer s,BufferedReader bufferedReader){
 
-        BufferedReader bufferedReader=new BufferedReader(fileReader);
-        StringTokenizer s=new StringTokenizer("");
         Matrix A=new Matrix(n,m);
         for(int i=0;i<n;i++){
-            s=new StringTokenizer(bufferedReader.readLine());
+            try {
+                s=new StringTokenizer(bufferedReader.readLine());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             for(int j=0;j<m;j++){
                 A.setE(i,j,Double.parseDouble(s.nextToken()));
             }
         }
         return  A;
+
+    }
+    public static void main(String[] args) {
+        test();
+        task1();
+        //task2();
+        //task3();
+
+
+
+    }
+    public static void test() {
+
+        System.out.println(new Vector(new double[]{5,5,5}).mult(0.11547005383792514));
+
+        System.out.println(Math.pow(new Vector(new double[]{5,5,5}).norm(),-1));
+
+    }
+    public static void testNumber(Pair<Vector,Double> propertyPair,Matrix A){
+        System.out.println(
+                "Av= "+A.mult(propertyPair.getFirst())
+                        +"xv= \n"+
+                        propertyPair.getFirst().mult(propertyPair.getSecond()));
+    }
+
+    public static void task1(){
+        FileReader fileReader= null;
+        try {
+            fileReader = new FileReader("input.txt");
+
+            BufferedReader bufferedReader=new BufferedReader(fileReader);
+            StringTokenizer s=new StringTokenizer("");
+            Matrix L=scanMatrix(3,3,s,bufferedReader);
+            Matrix C=scanMatrix(3,3,s,bufferedReader);
+            Matrix Cinv=scanMatrix(3,3,s,bufferedReader);
+
+
+            double N=2;
+
+            Matrix A=Cinv.mult(L).mult(C);
+            System.out.println("matrix:= \n"+A);
+            System.out.println("power method test");
+
+            Pair<Vector,Double>  bigPrNum=A.PowerMethod(new Vector(new double[]{5, 5, 5}));
+            System.out.println("Property number l= "+bigPrNum.getSecond());
+            System.out.println("Property vector v= "+bigPrNum.getSecond());
+
+            testNumber(bigPrNum,A);
+            System.out.println("Matrix scetrum:");
+
+            Pair<Vector,Double> propertyPair1=A.ReversePowerMethod(new Vector(new double[]{5, 5, 5}),2.06);
+            Pair<Vector,Double> propertyPair2=A.ReversePowerMethod(new Vector(new double[]{5, 5, 5}),3.06);
+            Pair<Vector,Double> propertyPair3=A.ReversePowerMethod(new Vector(new double[]{5, 5, 5}),3.96);
+            System.out.println("Property number1 l= "+propertyPair1.getSecond());
+            System.out.println("Property vector1 v= "+propertyPair1.getSecond());
+            System.out.println("Property number2 l= "+propertyPair2.getSecond());
+            System.out.println("Property vector2 v= "+propertyPair2.getSecond());
+            System.out.println("Property number3 l= "+propertyPair3.getSecond());
+            System.out.println("Property vector3 v= "+propertyPair3.getSecond());
+            System.out.println("testing number:");
+            testNumber(propertyPair1,A);
+            testNumber(propertyPair2,A);
+            testNumber(propertyPair3,A);
+
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-    public static void main(String[] args) {
-        /*task1
-        double N=2;
-        Matrix matrix=scanMatrix(3,3);
-        System.out.println(matrix.PowerMethod(new Vector(new double[]{5, 5, 5})));
-        System.out.println(matrix.ReversePowerMethod(new Vector(new double[]{5, 5, 5}),3.5));
-       // System.out.println(matrix.StaticReversePowerMethod(new Vector(new double[]{5, 5, 5}),3.5));
-        System.out.println(Matrix.logger);
-        System.out.println(
-                matrix.mult(matrix.ReversePowerMethod(new Vector(new double[]{5, 5, 5}),3.5).getFirst())
-                +"\n"+
-                        matrix.ReversePowerMethod(new Vector(new double[]{5, 5, 5}),3.5).getFirst().mult(matrix.ReversePowerMethod(new Vector(new double[]{5, 5, 5}),3.5).getSecond())
+    public static void task2FancyPrint(Func f){
+
+        ArrayList<Double> arr1=Util.getPoints(-3,3,6);
+        ArrayList<Double> arr2=Util.getPointsSmart(-3,3,6);
+
+        Polynom p1=f.interpolation(arr1);
+        Polynom p2=f.interpolation(arr2);
+        System.out.println("Langrang interpolation with default separation \n resutl:"+p1+"\n"
         );
-
-         */
-            /*task2
-        Func f=new Func(x->1332*Math.sin(x));
-        Polynom p1=f.interpolation(Func.getPoints(1000,2000,50));
-        Polynom p2=f.interpolation(Func.getPointsSmart(1000,2000,4));
-        System.out.println(p1.calc(2000));
-        System.out.println(1332*Math.sin(2000));
-        */
-
-           //task3
-        task3();
-
-
-        test();
+        for(int i=0;i<arr1.size();i++){
+            double xi=arr1.get(i);
+            System.out.println("\n xi: "+xi+
+                    "\n function value: "+f.calc(xi)+
+                    "\n interolation value: "+p1.calc(xi));
+        }
+        System.out.println("Langrang interpolation with smart separation \n resutl:"+p2+"\n"
+        );
+        for(int i=0;i<arr2.size();i++){
+            double xi=arr2.get(i);
+            System.out.println("\n xi: "+xi+
+                    "\n function value: "+f.calc(xi)+
+                    "\n interolation value: "+p2.calc(xi));
+        }
     }
-    public static void test() {
-        Func func = new Func(x -> Math.pow(x, 4));
-        Polynom p=new Polynom(new double[]{1,2,3,4});
-        Polynom g=new Polynom(new double[]{4,5,9,12,-2,2,10});
-        System.out.println(p.add(g));
-
+    public static void task2(){
+        task2FancyPrint(new Func(x->Math.pow(x,3)-Math.exp(x)+1));
+        task2FancyPrint(new Func(x->Math.abs(x)*(Math.pow(x,3)-Math.exp(x)+1)));
     }
+
     public static void  task3(){
 
       /*

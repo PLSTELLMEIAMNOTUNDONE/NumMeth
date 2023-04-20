@@ -17,16 +17,16 @@ public class Vector {
     }
     public Vector(int size,ArrayList<Double> arr){
         this.size=size;
-        this.els=arr;
+        this.els=new ArrayList<>(arr);
     }
     public Vector(ArrayList<Double> arr){
 
-        this.els=arr;
+        this.els=new ArrayList<>(arr);
         this.size=arr.size();
     }
     public Vector(Vector v){
         this.size=v.size;
-        this.els=v.els;
+        this.els=new ArrayList<>(v.els);
     }
     public Vector(int size,double x){
         this.size=size;
@@ -51,7 +51,7 @@ public class Vector {
         return ret;
     }
     public Vector mult(double x){
-        Vector ret=new Vector(this.size);
+        Vector ret=new Vector(this);
         for(int i=1;i<=size;i++)ret.setI(i,ret.getI(i)*x);
         return  ret;
     }
@@ -95,7 +95,7 @@ public class Vector {
         return Math.sqrt(this.mult(this));
     }
     public Vector normVersion(){
-        return new Vector(this).mult(1/this.norm());
+        return new Vector(this).mult(Math.pow(this.norm(),-1));
     }
     public double max(){
         double ans=0;

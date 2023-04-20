@@ -348,7 +348,7 @@ public class Matrix {
     public Vector getVector(int i){
         return new Vector(this.v.get(i-1));
     }
-    public Double PowerMethod(Vector y0){
+    public Pair<Vector,Double> PowerMethod(Vector y0){
         if((m)!=y0.getSize())return null;
 
         Matrix A=new Matrix(this);
@@ -356,18 +356,18 @@ public class Matrix {
         Vector zk=y0.normVersion();
         Vector lk=new Vector(zk);
         Vector nlk=new Vector(y0.getSize(),0);
-        double delt=0.000005,acc=Math.pow(10,-6);
+        double acc=Math.pow(10,-6);
         while((lk.plus(nlk.mult(-1))).max()>acc*Math.max(lk.max(),nlk.max())){
-            lk=nlk;
-            yk=new Vector(A.mult(zk));
-            Vector nzk=yk.normVersion();
-            nlk=new Vector(y0.getSize(),0);
+            lk=new Vector(nlk);
+            yk=A.mult(zk);
+
             for(int i=1;i<=yk.getSize();i++){
-                if(Math.abs(zk.getI(i))>delt)nlk.setI(i,yk.getI(i)/zk.getI(i));
+                if(Math.abs(zk.getI(i))>acc)nlk.setI(i,yk.getI(i)/zk.getI(i));
                 else nlk.setI(i,0);
             }
+            zk=yk.normVersion();
+            //if((lk.plus(nlk.mult(-1))).max()<=acc)break;
 
-            zk=nzk;
         }
         double ans=0,count=0;
         for(double el:lk.getEls()){
@@ -375,7 +375,7 @@ public class Matrix {
             ans+=el;
             count++;
         }
-        return ans/count;
+        return count==0?null:new Pair(zk,ans/count);
 
     }
     public static Matrix id(int n,int m){
@@ -430,6 +430,7 @@ public class Matrix {
         return new Pair<>(nzk,nvk);
 
     }
+
     public Pair<Vector,Double> StaticReversePowerMethod(Vector y0,double v0){
         if((m)!=y0.getSize())return null;
         logger.register(this);
