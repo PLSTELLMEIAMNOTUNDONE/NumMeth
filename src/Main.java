@@ -85,6 +85,9 @@ public class Main {
                         +"xv= \n"+
                         propertyPair.getFirst().mult(propertyPair.getSecond()));
     }
+    public static void pushTeest(){
+
+    }
 
     public static void task1(){
         FileReader fileReader= null;
