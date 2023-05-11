@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class Util {
-    static double  acc=Math.pow(10,-10);
+    static double  acc=Math.pow(10,-4);
 
     public static Func YANA(double x1,double x2,double y1,double y2){
         return new Func(y->((y-y2)*(x1-x2)/(y1-y2))+x2);

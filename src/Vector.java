@@ -1,5 +1,4 @@
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+//import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -87,7 +86,7 @@ public class Vector {
         }
         return ret;
     }
-    public static @NotNull Vector mult(Matrix A, Vector v){
+    public static  Vector mult(Matrix A, Vector v){
         if(v.size!=A.getRows())return null;
         return new Vector((A.multVec(v.els)));
     }

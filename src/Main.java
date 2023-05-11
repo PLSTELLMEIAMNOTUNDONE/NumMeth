@@ -64,11 +64,14 @@ public class Main {
 
     }
     public static void main(String[] args) {
-        test();
+        //test();
+        /*System.out.println("task 1\n");
         task1();
-        //task2();
-        //task3();
 
+        System.out.println("task 3\n");
+        task3();*/
+        System.out.println("task 2\n");
+        task2();
 
 
     }
@@ -109,7 +112,7 @@ public class Main {
 
             Pair<Vector,Double>  bigPrNum=A.PowerMethod(new Vector(new double[]{5, 5, 5}));
             System.out.println("Property number l= "+bigPrNum.getSecond());
-            System.out.println("Property vector v= "+bigPrNum.getSecond());
+            System.out.println("Property vector v= "+bigPrNum.getFirst());
 
             testNumber(bigPrNum,A);
             System.out.println("Matrix scetrum:");
@@ -118,11 +121,11 @@ public class Main {
             Pair<Vector,Double> propertyPair2=A.ReversePowerMethod(new Vector(new double[]{5, 5, 5}),3.06);
             Pair<Vector,Double> propertyPair3=A.ReversePowerMethod(new Vector(new double[]{5, 5, 5}),3.96);
             System.out.println("Property number1 l= "+propertyPair1.getSecond());
-            System.out.println("Property vector1 v= "+propertyPair1.getSecond());
+            System.out.println("Property vector1 v= "+propertyPair1.getFirst());
             System.out.println("Property number2 l= "+propertyPair2.getSecond());
-            System.out.println("Property vector2 v= "+propertyPair2.getSecond());
+            System.out.println("Property vector2 v= "+propertyPair2.getFirst());
             System.out.println("Property number3 l= "+propertyPair3.getSecond());
-            System.out.println("Property vector3 v= "+propertyPair3.getSecond());
+            System.out.println("Property vector3 v= "+propertyPair3.getFirst());
             System.out.println("testing number:");
             testNumber(propertyPair1,A);
             testNumber(propertyPair2,A);
@@ -135,30 +138,28 @@ public class Main {
     }
     public static void task2FancyPrint(Func f){
 
-        ArrayList<Double> arr1=Util.getPoints(-3,3,6);
-        ArrayList<Double> arr2=Util.getPointsSmart(-3,3,6);
+        ArrayList<Double> arr1=Util.getPoints(-1,1,4);
+        ArrayList<Double> arr2=Util.getPointsSmart(-1,1,4);
 
         Polynom p1=f.interpolation(arr1);
         Polynom p2=f.interpolation(arr2);
-        System.out.println("Langrang interpolation with default separation \n resutl:"+p1+"\n"
+        System.out.println("Langrang interpolation with default separation  5 point \n resutl:"+p1+"\n");
+
+        System.out.println("Langrang interpolation with smart separation 5 point \n resutl:"+p2+"\n"
         );
-        for(int i=0;i<arr1.size();i++){
-            double xi=arr1.get(i);
-            System.out.println("\n xi: "+xi+
-                    "\n function value: "+f.calc(xi)+
-                    "\n interolation value: "+p1.calc(xi));
-        }
-        System.out.println("Langrang interpolation with smart separation \n resutl:"+p2+"\n"
+        arr1=Util.getPoints(-1,1,7);
+        arr2=Util.getPointsSmart(-1,1,7);
+
+        p1=f.interpolation(arr1);
+        p2=f.interpolation(arr2);
+        System.out.println("Langrang interpolation with default separation 10 point \n resutl:"+p1+"\n");
+
+        System.out.println("Langrang interpolation with smart separation  10 point \n resutl:"+p2+"\n"
         );
-        for(int i=0;i<arr2.size();i++){
-            double xi=arr2.get(i);
-            System.out.println("\n xi: "+xi+
-                    "\n function value: "+f.calc(xi)+
-                    "\n interolation value: "+p2.calc(xi));
-        }
     }
     public static void task2(){
         task2FancyPrint(new Func(x->Math.pow(x,3)-Math.exp(x)+1));
+        System.out.println("|X|*f\n");
         task2FancyPrint(new Func(x->Math.abs(x)*(Math.pow(x,3)-Math.exp(x)+1)));
     }
 
@@ -219,10 +220,7 @@ public class Main {
         Polynom l1=Func.getLn(1);
         Polynom l2=Func.getLn(2);
         Polynom l3=Func.getLn(3);
-        System.out.println(l0);
-        System.out.println(l1);
-        System.out.println(l2);
-        System.out.println(l3);
+
         /*
         * define ck;
         * */
