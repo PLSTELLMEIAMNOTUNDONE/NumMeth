@@ -1,6 +1,10 @@
+package out.polynom;
+
+import out.vector.Vector;
+
 import java.util.ArrayList;
 
-public class Polynom extends Func{
+public class Polynom extends Func {
     protected ArrayList<Double> params;
     protected int size=0;
     public Polynom(){

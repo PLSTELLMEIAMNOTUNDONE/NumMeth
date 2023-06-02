@@ -1,3 +1,8 @@
+package out.function;
+
+import out.polynom.Polynom;
+import out.utility.Util;
+
 import java.util.ArrayList;
 
 public class Func {
@@ -40,7 +45,7 @@ public class Func {
     }
 
 
-    double calcProd(double x0) {
+    public double calcProd(double x0) {
         Calculated c = (x -> (calc(x + x0) - calc(x0)) / x);
         return new Func(c).limit(0);
     }
